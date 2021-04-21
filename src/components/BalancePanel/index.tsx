@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Chart from './Chart';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -9,9 +9,14 @@ import {
   AddOperationButton,
   AddOperationButtonText,
 } from './styles';
+import { saveEntry } from '../../services/Entries';
 
 const BalancePanel: React.FC = () => {
   const navigation = useNavigation();
+
+  const save = useCallback(() => {
+    saveEntry()
+  }, []);
 
   return (
     <Container>
@@ -22,7 +27,9 @@ const BalancePanel: React.FC = () => {
 
       <Chart />
 
-      <AddOperationButton onPress={() => navigation.navigate('NewEntry')}>
+      {/* () => navigation.navigate('NewEntry') */}
+
+      <AddOperationButton onPress={save}>
         <AddOperationButtonText>+</AddOperationButtonText>
       </AddOperationButton>
     </Container>
