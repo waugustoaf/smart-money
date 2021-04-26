@@ -1,15 +1,19 @@
 import React from 'react';
 import { View, Text } from 'react-native';
-import { ItemProps } from '..';
+import { IEntry } from '../../../interfaces/IEntry';
 import { Container } from './styles';
 
-const EntryListItem: React.FC<{ item: ItemProps }> = ({
-  item: { fieldName, price },
-}) => {
+interface ReceivedProps {
+  item: IEntry;
+}
+
+const EntryListItem: React.FC<ReceivedProps> = ({ item }) => {
+  const { id, amount } = item;
+
   return (
     <Container>
       <Text>
-        {fieldName}: {price}
+        {id}: {amount}
       </Text>
     </Container>
   );

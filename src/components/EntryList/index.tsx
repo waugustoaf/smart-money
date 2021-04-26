@@ -1,27 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
+import { IEntry } from '../../interfaces/IEntry';
+import { getEntries } from '../../services/Entries';
 import EntryListItem from './Item';
 import { Container, Title } from './styles';
 
-export interface ItemProps {
-  id: number;
-  fieldName: string;
-  price: number;
-}
-
 const EntryList: React.FC = () => {
-  const [items, setItems] = useState<ItemProps[]>([
-    { id: 1, fieldName: 'Padaria Asa Branca', price: 10 },
-    { id: 2, fieldName: 'Supermercado Isadora', price: 190 },
-    { id: 3, fieldName: 'Posto Ipiranga', price: 120 },
-  ]);
+  const [entries, setEntries] = useState([] as IEntry[]);
+
+  useEffect(() => {
+    (async() => {
+      const data = await getEntries();
+      console.log(data);
+    })()
+  }, []);
 
   return (
     <Container>
       <Title>Últimos lançamentos</Title>
 
       <FlatList
-        data={items}
+        data={entries}
         renderItem={({ item }) => <EntryListItem item={item} />}
         keyExtractor={item => item.id.toString()}
       />

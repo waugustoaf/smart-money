@@ -15,7 +15,7 @@ const BalancePanel: React.FC = () => {
   const navigation = useNavigation();
 
   const save = useCallback(() => {
-    saveEntry()
+    navigation.navigate('NewEntry');
   }, []);
 
   return (

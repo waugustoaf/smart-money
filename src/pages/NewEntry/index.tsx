@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import BalanceLabel from '../../components/BalanceLabel';
 import { useNavigation } from '@react-navigation/native';
 import {
@@ -14,16 +14,31 @@ import {
   Form,
   FormInput,
 } from './styles';
+import { saveEntry } from '../../services/Entries';
+import { v4 as uuid } from 'uuid';
 
 const NewEntry: React.FC = () => {
   const navigation = useNavigation();
+
+  const [amount, setAmount] = useState('0');
+
+  const save = () => {
+    const data = {
+      amount: parseFloat(amount),
+      id: uuid(),
+      entryAt: new Date(),
+      isInit: false,
+    };
+
+    saveEntry(data);
+  };
 
   return (
     <Container>
       <BalanceLabel />
 
       <Form>
-        <FormInput />
+        <FormInput onChangeText={value => setAmount(value)} value={amount} />
         <FormInput />
 
         <GPSButton>
@@ -34,7 +49,7 @@ const NewEntry: React.FC = () => {
         </CameraButton>
 
         <ButtonsView>
-          <AddButton>
+          <AddButton onPress={save}>
             <AddButtonText>Adicionar</AddButtonText>
           </AddButton>
 
