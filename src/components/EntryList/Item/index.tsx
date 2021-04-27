@@ -1,20 +1,29 @@
+import { useNavigation } from '@react-navigation/native';
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Text } from 'react-native';
 import { IEntry } from '../../../interfaces/IEntry';
-import { Container } from './styles';
+import { Button, Container } from './styles';
 
 interface ReceivedProps {
-  item: IEntry;
+  entry: IEntry;
 }
 
-const EntryListItem: React.FC<ReceivedProps> = ({ item }) => {
-  const { id, amount } = item;
+const EntryListItem: React.FC<ReceivedProps> = ({ entry }) => {
+  const navigation = useNavigation();
+  const { description, id, amount } = entry;
+
+  const handleSetCurrentEntry = () => {
+    navigation.navigate('NewEntry', { entry });
+  };
 
   return (
     <Container>
       <Text>
-        {id}: {amount}
+        {description}: {amount}
       </Text>
+      <Button onPress={handleSetCurrentEntry}>
+        <Text>{id}</Text>
+      </Button>
     </Container>
   );
 };

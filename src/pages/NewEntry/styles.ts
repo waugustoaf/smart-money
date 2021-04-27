@@ -30,3 +30,7 @@ export const AddButtonText = styled.Text``;
 export const IconedButtonText = styled.Text``;
 
 export const ButtonsView = styled.View``;
+
+export const DeleteButton = styled.TouchableOpacity``;
+
+export const DeleteButtonText = styled.Text``;

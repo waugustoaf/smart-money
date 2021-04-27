@@ -1,19 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
-import { IEntry } from '../../interfaces/IEntry';
-import { getEntries } from '../../services/Entries';
+import { useEntry } from '../../hooks/Entry';
 import EntryListItem from './Item';
 import { Container, Title } from './styles';
 
 const EntryList: React.FC = () => {
-  const [entries, setEntries] = useState([] as IEntry[]);
-
-  useEffect(() => {
-    (async() => {
-      const data = await getEntries();
-      console.log(data);
-    })()
-  }, []);
+  const { entries } = useEntry();
 
   return (
     <Container>
@@ -21,7 +13,7 @@ const EntryList: React.FC = () => {
 
       <FlatList
         data={entries}
-        renderItem={({ item }) => <EntryListItem item={item} />}
+        renderItem={({ item: entry }) => <EntryListItem entry={entry} />}
         keyExtractor={item => item.id.toString()}
       />
     </Container>

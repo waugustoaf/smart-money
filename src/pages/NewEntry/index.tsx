@@ -1,36 +1,66 @@
+import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import BalanceLabel from '../../components/BalanceLabel';
-import { useNavigation } from '@react-navigation/native';
+import { useEntry } from '../../hooks/Entry';
+import { IEntry } from '../../interfaces/IEntry';
 import {
-  GPSButton,
-  CameraButton,
   AddButton,
-  CancelButton,
-  IconedButtonText,
   AddButtonText,
   ButtonsView,
   ButtonText,
+  CameraButton,
+  CancelButton,
   Container,
+  DeleteButton,
+  DeleteButtonText,
   Form,
   FormInput,
+  GPSButton,
+  IconedButtonText,
 } from './styles';
-import { saveEntry } from '../../services/Entries';
-import { v4 as uuid } from 'uuid';
+
+interface IParams {
+  entry: IEntry;
+}
 
 const NewEntry: React.FC = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const { save, remove } = useEntry();
 
-  const [amount, setAmount] = useState('0');
-
-  const save = () => {
-    const data = {
-      amount: parseFloat(amount),
-      id: uuid(),
+  const { entry: entryAuxiliar } = (route.params as IParams) || {
+    entry: undefined,
+  };
+  let { entry } = (route.params as IParams) || {
+    entry: {
+      id: '',
+      amount: parseFloat('0'),
       entryAt: new Date(),
       isInit: false,
-    };
+    },
+  };
+  const hasEntry = !!entryAuxiliar;
 
-    saveEntry(data);
+  const [amount, setAmount] = useState(String(entry.amount));
+
+  const handleSaveEntry = () => {
+    if (hasEntry) {
+      save({
+        amount,
+        isInit: false,
+        id: entry.id,
+        entryAt: entry.entryAt,
+      });
+    } else {
+      save({ amount, isInit: false });
+    }
+
+    navigation.goBack();
+  };
+
+  const handleDeleteEntry = () => {
+    remove(entry.id);
+    navigation.goBack();
   };
 
   return (
@@ -49,9 +79,15 @@ const NewEntry: React.FC = () => {
         </CameraButton>
 
         <ButtonsView>
-          <AddButton onPress={save}>
+          <AddButton onPress={handleSaveEntry}>
             <AddButtonText>Adicionar</AddButtonText>
           </AddButton>
+
+          {hasEntry && (
+            <DeleteButton onPress={handleDeleteEntry}>
+              <DeleteButtonText>Excluir</DeleteButtonText>
+            </DeleteButton>
+          )}
 
           <CancelButton onPress={() => navigation.goBack()}>
             <ButtonText>Cancelar</ButtonText>
