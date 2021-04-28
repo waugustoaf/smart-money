@@ -1,5 +1,6 @@
 import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
+import { StatusBar } from 'react-native';
 import BalanceLabel from '../../components/BalanceLabel';
 import { useEntry } from '../../hooks/Entry';
 import { IEntry } from '../../interfaces/IEntry';
@@ -43,7 +44,17 @@ const NewEntry: React.FC = () => {
 
   const [amount, setAmount] = useState(String(entry.amount));
 
+  const isValid = () => {
+    if (parseFloat(amount) !== 0) {
+      return true;
+    }
+
+    return false;
+  };
+
   const handleSaveEntry = () => {
+    if (!isValid()) return;
+
     if (hasEntry) {
       save({
         amount,
@@ -65,6 +76,7 @@ const NewEntry: React.FC = () => {
 
   return (
     <Container>
+      <StatusBar backgroundColor="#233240" />
       <BalanceLabel />
 
       <Form>

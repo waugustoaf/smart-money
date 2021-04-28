@@ -1,15 +1,15 @@
-import React, { useCallback } from 'react';
-import Chart from './Chart';
 import { useNavigation } from '@react-navigation/native';
+import React, { useCallback } from 'react';
+import { Colors } from '../../utils/colors';
+import Chart from './Chart';
 import {
-  BalancePanelLabel,
-  Container,
-  BalanceLabel,
-  BalanceValue,
   AddOperationButton,
-  AddOperationButtonText,
+  BalanceLabel,
+  BalancePanelLabel,
+  BalanceValue,
+  Container,
 } from './styles';
-import { saveEntry } from '../../services/Entries';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const BalancePanel: React.FC = () => {
   const navigation = useNavigation();
@@ -19,20 +19,32 @@ const BalancePanel: React.FC = () => {
   }, []);
 
   return (
-    <Container>
-      <BalancePanelLabel>
-        <BalanceLabel>Saldo Atual</BalanceLabel>
-        <BalanceValue>R$2.102,45</BalanceValue>
-      </BalancePanelLabel>
+    <>
+      <Container style={{ flex: 1 }} colors={[Colors.violet, Colors.blue]}>
+        <BalancePanelLabel>
+          <BalanceLabel>Saldo Atual</BalanceLabel>
+          <BalanceValue>R$2.102,45</BalanceValue>
+        </BalancePanelLabel>
 
-      <Chart />
-
-      {/* () => navigation.navigate('NewEntry') */}
-
-      <AddOperationButton onPress={save}>
-        <AddOperationButtonText>+</AddOperationButtonText>
+        <Chart />
+      </Container>
+      <AddOperationButton
+        style={{
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 4,
+          },
+          shadowOpacity: 0.3,
+          shadowRadius: 4.65,
+          elevation: 8,
+        }}
+        onPress={save}
+        activeOpacity={0.8}
+      >
+        <Icon name="add" size={35} color="#fff" />
       </AddOperationButton>
-    </Container>
+    </>
   );
 };
 

@@ -8,7 +8,7 @@ export interface IEntry {
   address?: string;
   photo?: string;
   isInit: boolean
-  category?: string;
+  category?: ICategory;
 }
 
 export interface ICategory {

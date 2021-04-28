@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import BalancePanel from '../../components/BalancePanel';
 import EntryList from '../../components/EntryList';
 import EntrySummary from '../../components/EntrySummary';
@@ -15,6 +16,7 @@ const Home: React.FC = () => {
 
   return (
     <Container>
+      <StatusBar backgroundColor="#9b59b6" />
       <BalancePanel />
       <EntrySummary />
       <EntryList />

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList, Text } from 'react-native';
-import { Container, Title } from './styles';
+import { Container } from './styles';
 
 interface CategoriesProps {
   id: number;
@@ -19,11 +19,9 @@ const EntrySummaryList = () => {
 
   return (
     <Container>
-      <Title>Categorias</Title>
-
       <FlatList
         data={categories}
-        renderItem={({ item }) => <Text>{item.fieldName}</Text>}
+        renderItem={({ item }) => <Text>- {item.fieldName}</Text>}
         keyExtractor={item => item.id.toString()}
       />
     </Container>
