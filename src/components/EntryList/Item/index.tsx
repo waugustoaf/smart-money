@@ -48,7 +48,11 @@ const EntryListItem: React.FC<ReceivedProps> = ({
   }
 
   function formatMoney(value: number): string {
-    return `R$ ${value
+    const isOut = value < 0;
+    const positiveValue = isOut ? value * -1 : value;
+    const prefix = isOut ? '- R$' : 'R$';
+
+    return `${prefix} ${positiveValue
       .toFixed(2)
       .replace('.', ',')
       .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`;
@@ -103,7 +107,7 @@ const EntryListItem: React.FC<ReceivedProps> = ({
       </DescriptionView>
 
       <ValueView>
-        <ValueLabel>{formatMoney(entry.amount)}</ValueLabel>
+        <ValueLabel isOut={entry.amount < 0}>{formatMoney(entry.amount)}</ValueLabel>
       </ValueView>
     </Container>
   );

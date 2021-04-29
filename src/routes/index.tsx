@@ -15,8 +15,9 @@ const Routes: React.FC = () => {
     <Navigator
       screenOptions={{
         headerShown: false,
-        cardStyle: { backgroundColor: '#6687f2' },
+        cardStyle: { backgroundColor: '#233240' },
       }}
+      initialRouteName="Home"
     >
       <Screen name="Home" component={Home} />
       <Screen name="NewEntry" component={NewEntry} />

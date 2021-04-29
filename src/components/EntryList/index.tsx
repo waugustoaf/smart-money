@@ -1,3 +1,4 @@
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import React from 'react';
 import { FlatList } from 'react-native';
 import { useEntry } from '../../hooks/Entry';
@@ -14,6 +15,7 @@ import {
 } from './styles';
 
 const EntryList: React.FC = () => {
+  const navigation = useNavigation();
   const { entries } = useEntry();
 
   return (
@@ -36,7 +38,7 @@ const EntryList: React.FC = () => {
 
       <PeriodView>
         <PeriodText>Últimos 7 dias</PeriodText>
-        <PeriodButton>
+        <PeriodButton onPress={() => navigation.navigate('Report')}>
           <Icon name="insert-chart" color="#fff" />
           <PeriodButtonText>Ver mais</PeriodButtonText>
         </PeriodButton>

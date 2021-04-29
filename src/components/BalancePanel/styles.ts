@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import LinearGradient from 'react-native-linear-gradient';
+import { Dimensions } from 'react-native';
 
 export const Container = styled(LinearGradient)`
   flex: 3;
@@ -33,8 +34,8 @@ export const AddOperationButton = styled.TouchableOpacity`
   align-items: center;
 
   position: absolute;
-  right: 12px;
-  top: 165px;
+  right: ${Dimensions.get('window').width * 0.04}px;
+  top: ${Dimensions.get('window').height * 0.215}px;
   font-size: 0;
 
   z-index: 5;
