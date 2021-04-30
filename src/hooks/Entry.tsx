@@ -7,6 +7,7 @@ import React, {
   useState,
 } from 'react';
 import { v4 as uuid } from 'uuid';
+import { ICategory } from '../interfaces/ICategory';
 import { IEntry } from '../interfaces/IEntry';
 import { deleteEntry, getEntries, saveEntry } from '../services/Entries';
 
@@ -15,6 +16,7 @@ interface SaveEntryProps {
   isInit: boolean;
   id?: string;
   entryAt?: Date;
+  category: ICategory;
 }
 
 interface IEntryContextProps {
@@ -39,12 +41,13 @@ const EntryProvider: React.FC = ({ children }) => {
   }, []);
 
   const save = useCallback(
-    async ({ amount, isInit, id, entryAt }: SaveEntryProps) => {
+    async ({ amount, isInit, id, entryAt, category  }: SaveEntryProps) => {
       const data = {
         amount: parseFloat(amount),
         id: id || uuid(),
         entryAt: entryAt || new Date(),
         isInit,
+        category,
       };
 
       saveEntry(data, !!id);

@@ -1,10 +1,12 @@
 import { Alert } from 'react-native';
 import 'react-native-get-random-values';
+import { UpdateMode } from 'realm';
+import { ICategory } from '../interfaces/ICategory';
 import { IEntry } from '../interfaces/IEntry';
 import { getRealm } from './Realm';
 
 export const saveEntry = async (
-  { amount, id, entryAt, isInit }: IEntry,
+  { amount, id, entryAt, isInit, category }: IEntry,
   isEditing: boolean,
 ) => {
   const realm = await getRealm();
@@ -14,30 +16,37 @@ export const saveEntry = async (
     amount: amount,
     entryAt: entryAt,
     isInit: isInit,
+    category: category || ({} as ICategory),
   };
 
-  try {
-    if (isEditing) {
-      const entries = (realm
-        .objects('Entry')
-        .filtered(`id = '${id}'`) as unknown) as IEntry[];
-      realm.write(() => {
-        entries[0].amount = amount;
-        entries[0].entryAt = entryAt;
-        entries[0].isInit = isInit;
-      });
-      return;
-    }
+  if (!category?.id) {
+    Alert.alert(
+      'Erro ao salvar entrada!',
+      'Você deve selecionar uma categoria.',
+    );
+    return;
+  }
+
+  if (isEditing) {
+    const entries = (realm
+      .objects('Entry')
+      .filtered(`id = '${id}'`) as unknown) as IEntry[];
 
     realm.write(() => {
-      realm.create('Entry', data);
+      entries[0].amount = amount;
+      entries[0].entryAt = entryAt;
+      entries[0].isInit = isInit;
+      entries[0].category = category;
     });
 
-    return data;
-  } catch (err) {
-    console.error('saveEntry :: error on save object', data);
-    Alert.alert('Erro ao salvar os dados de entrada!');
+    return;
   }
+
+  realm.write(() => {
+    realm.create('Entry', data, UpdateMode.Modified);
+  });
+
+  return data;
 };
 
 export const getEntries = async () => {
@@ -69,4 +78,4 @@ export const deleteEntry = async (id: string) => {
     console.error('deleteEntry :: error on delete object', entry[0]);
     Alert.alert('Erro ao excluir este dado de entrada!');
   }
-}
+};

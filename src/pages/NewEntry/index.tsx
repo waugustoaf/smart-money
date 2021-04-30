@@ -2,8 +2,12 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import React, { useCallback, useEffect, useState } from 'react';
 import { StatusBar } from 'react-native';
 import BalanceLabel from '../../components/BalanceLabel';
+import { Load } from '../../components/Load';
+import { useCategory } from '../../hooks/Category';
 import { useEntry } from '../../hooks/Entry';
+import { ICategory } from '../../interfaces/ICategory';
 import { IEntry } from '../../interfaces/IEntry';
+import { NewEntryCategoryPicker } from './CategoryPicker';
 import { NewEntryInput } from './Input';
 import {
   AddButton,
@@ -16,7 +20,6 @@ import {
   DeleteButton,
   DeleteButtonText,
   Form,
-  FormInput,
   GPSButton,
   IconedButtonText,
 } from './styles';
@@ -29,6 +32,7 @@ const NewEntry: React.FC = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const { save, remove } = useEntry();
+  const { categories } = useCategory();
 
   let { entry } = (route.params as IParams) || {
     entry: {
@@ -41,14 +45,28 @@ const NewEntry: React.FC = () => {
 
   const [amount, setAmount] = useState(String(entry.amount));
   const [isEntry, setIsEntry] = useState(entry.amount >= 0);
+  const [category, setCategory] = useState(entry?.category || {} as ICategory);
+  const [canPass, setCanPass] = useState(false);
+  
+  useEffect(() => {
+    if(canPass) {
+      setCategory({} as ICategory);
+    }
+    setCanPass(true);
+  }, [isEntry]);
 
   const isValid = () => {
-    if (parseFloat(amount) !== 0) {
+    if (parseFloat(amount) !== 0 && !!category.id) {
       return true;
     }
 
     return false;
   };
+
+  const formatAmount = (value: string) => {
+    const finalValue = value.replace('.', '').replace(',', '.');
+    return parseFloat(finalValue);
+  }
 
   const handleSaveEntry = () => {
     if (!isValid()) return;
@@ -76,9 +94,10 @@ const NewEntry: React.FC = () => {
         isInit: false,
         id: entry.id,
         entryAt: entry.entryAt,
+        category,
       });
     } else {
-      save({ amount: String(finalAmount), isInit: false });
+      save({ amount: String(finalAmount), isInit: false, category });
     }
 
     navigation.goBack();
@@ -93,6 +112,8 @@ const NewEntry: React.FC = () => {
     setIsEntry(previousValue => !previousValue);
   }, []);
 
+  if (categories.length === 0) return <Load />;
+
   return (
     <Container>
       <StatusBar backgroundColor="#233240" />
@@ -101,11 +122,15 @@ const NewEntry: React.FC = () => {
       <Form>
         <NewEntryInput
           onChangeText={value => setAmount(value)}
-          value={String(parseFloat(amount) * 100)}
+          value={String(formatAmount(amount) * 100)}
           handleChangeEntry={handleChangeEntry}
           isEntry={isEntry}
         />
-        <FormInput />
+        <NewEntryCategoryPicker
+          setCategory={setCategory}
+          selectedCategory={category}
+          isEntry={isEntry}
+        />
 
         <GPSButton>
           <IconedButtonText>GPS</IconedButtonText>

@@ -1,6 +1,11 @@
 import React from 'react';
+import { CategoryProvider } from './Category';
 import { EntryProvider } from './Entry';
 
 export const AppProvider: React.FC = ({ children }) => {
-  return <EntryProvider>{children}</EntryProvider>;
+  return (
+    <CategoryProvider>
+      <EntryProvider>{children}</EntryProvider>
+    </CategoryProvider>
+  );
 };
