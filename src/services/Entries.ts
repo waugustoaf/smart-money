@@ -6,7 +6,7 @@ import { IEntry } from '../interfaces/IEntry';
 import { getRealm } from './Realm';
 
 export const saveEntry = async (
-  { amount, id, entryAt, isInit, category }: IEntry,
+  { amount, id, entryAt, isInit, category, description }: IEntry,
   isEditing: boolean,
 ) => {
   const realm = await getRealm();
@@ -16,6 +16,7 @@ export const saveEntry = async (
     amount: amount,
     entryAt: entryAt,
     isInit: isInit,
+    description,
     category: category || ({} as ICategory),
   };
 
@@ -37,6 +38,7 @@ export const saveEntry = async (
       entries[0].entryAt = entryAt;
       entries[0].isInit = isInit;
       entries[0].category = category;
+      entries[0].description = description;
     });
 
     return;

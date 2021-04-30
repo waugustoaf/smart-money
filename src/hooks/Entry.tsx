@@ -17,6 +17,7 @@ interface SaveEntryProps {
   id?: string;
   entryAt?: Date;
   category: ICategory;
+  description: string;
 }
 
 interface IEntryContextProps {
@@ -41,12 +42,15 @@ const EntryProvider: React.FC = ({ children }) => {
   }, []);
 
   const save = useCallback(
-    async ({ amount, isInit, id, entryAt, category  }: SaveEntryProps) => {
+    async ({ amount, isInit, id, entryAt, category, description  }: SaveEntryProps) => {
+      console.log(description);
+
       const data = {
         amount: parseFloat(amount),
         id: id || uuid(),
         entryAt: entryAt || new Date(),
         isInit,
+        description,
         category,
       };
 

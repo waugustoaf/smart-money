@@ -7,12 +7,21 @@ export const Container = styled.View`
 `;
 
 export const Form = styled.View`
+  flex: 1;
   width: 100%;
+  justify-content: space-around;
 `;
 
 export const FormInput = styled.TextInput`
   border-color: #000;
   border-width: 1px;
+`;
+
+export const FormActionContainer = styled.View`
+  flex-direction: row;
+  align-items: center;
+  margin-top: 30px;
+  justify-content: space-around;
 `;
 
 export const GPSButton = styled.TouchableOpacity``;
@@ -34,3 +43,4 @@ export const ButtonsView = styled.View``;
 export const DeleteButton = styled.TouchableOpacity``;
 
 export const DeleteButtonText = styled.Text``;
+
