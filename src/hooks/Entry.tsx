@@ -1,4 +1,3 @@
-import { useNavigation } from '@react-navigation/native';
 import React, {
   createContext,
   useCallback,
@@ -25,6 +24,8 @@ interface IEntryContextProps {
   isLoading: boolean;
   save: (item: SaveEntryProps) => void;
   remove: (id: string) => void;
+  days: number;
+  setDays: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const EntryContext = createContext({} as IEntryContextProps);
@@ -32,18 +33,25 @@ const EntryContext = createContext({} as IEntryContextProps);
 const EntryProvider: React.FC = ({ children }) => {
   const [entries, setEntries] = useState([] as IEntry[]);
   const [isLoading, setIsLoading] = useState(true);
+  const [days, setDays] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const entryArray = await getEntries();
+      const entryArray = await getEntries(days);
       setEntries(entryArray);
       setIsLoading(false);
     })();
-  }, []);
+  }, [days]);
 
   const save = useCallback(
-    async ({ amount, isInit, id, entryAt, category, description  }: SaveEntryProps) => {
-
+    async ({
+      amount,
+      isInit,
+      id,
+      entryAt,
+      category,
+      description,
+    }: SaveEntryProps) => {
       const data = {
         amount: parseFloat(amount),
         id: id || uuid(),
@@ -55,7 +63,7 @@ const EntryProvider: React.FC = ({ children }) => {
 
       saveEntry(data, !!id);
 
-      const newEntries = await getEntries();
+      const newEntries = await getEntries(days);
       setEntries(newEntries);
     },
     [],
@@ -70,7 +78,9 @@ const EntryProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <EntryContext.Provider value={{ entries, save, isLoading, remove }}>
+    <EntryContext.Provider
+      value={{ entries, save, isLoading, remove, days, setDays }}
+    >
       {children}
     </EntryContext.Provider>
   );

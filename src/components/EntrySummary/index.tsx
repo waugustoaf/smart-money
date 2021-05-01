@@ -1,5 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react';
+import { useEntry } from '../../hooks/Entry';
+import { formatDays } from '../../utils/formatDays';
 import EntrySummaryChart from './Chart';
 import EntrySummaryList from './List';
 import {
@@ -15,6 +17,7 @@ import {
 
 const EntrySummary = () => {
   const navigation = useNavigation();
+  const { days } = useEntry();
 
   return (
     <Container>
@@ -25,7 +28,7 @@ const EntrySummary = () => {
       </Body>
 
       <PeriodView>
-        <PeriodText>Últimos 7 dias</PeriodText>
+        <PeriodText>{formatDays(days)}</PeriodText>
         <PeriodButton onPress={() => navigation.navigate('Report')}>
           <Icon name="insert-chart" color="#fff" />
           <PeriodButtonText>Ver mais</PeriodButtonText>

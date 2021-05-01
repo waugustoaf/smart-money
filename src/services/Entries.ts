@@ -4,6 +4,7 @@ import { UpdateMode } from 'realm';
 import { ICategory } from '../interfaces/ICategory';
 import { IEntry } from '../interfaces/IEntry';
 import { getRealm } from './Realm';
+import { sub } from 'date-fns';
 
 export const saveEntry = async (
   { amount, id, entryAt, isInit, category, description }: IEntry,
@@ -51,10 +52,22 @@ export const saveEntry = async (
   return data;
 };
 
-export const getEntries = async () => {
+export const getEntries = async (days: number) => {
   const realm = await getRealm();
 
-  const entries = realm.objects('Entry').sorted('entryAt', true);
+  let searchBuild = realm.objects('Entry');
+
+  if (days > 0) {
+    const startDate = sub(new Date(), { days });
+    searchBuild = searchBuild.filtered(`entryAt >= $0 AND entryAt < $1`, startDate, new Date());
+  }
+
+  if(days < 0){
+    searchBuild = searchBuild.filtered('entryAt > $0', new Date());
+  } 
+
+  const entries = searchBuild.sorted('entryAt', true);
+
   // realm.write(() => {
   //   realm.deleteAll();
   // });

@@ -1,26 +1,23 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.Modal``;
+
+export const FlatView = styled.View`
   flex: 1;
+  background-color: ${props => props.theme.colors.background};
 `;
 
-export const FiltersView = styled.View`
-  padding: 10px 0;
+export const ItemButton = styled.TouchableOpacity`
+  background-color: ${props => props.theme.colors.asphalt};
+  border-radius: 15px;
+  margin: 10px 20px;
+  padding: 20px;
 `;
 
-export const DaysButton = styled.TouchableOpacity`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0 15px;
-  padding: 5px 10px;
-  border: 1px solid ${props => props.theme.colors.champagneDark};
-  border-radius: 150px;
-`;
-
-export const DaysButtonText = styled.Text`
-  color: ${props => props.theme.colors.champagneDark};
-  font-weight: bold;
+export const ItemButtonText = styled.Text`
+  color: ${props => props.theme.colors.white};
+  font-size: 18px;
+  text-align: center;
 `;
 
 export const ButtonsView = styled.View`
@@ -28,6 +25,7 @@ export const ButtonsView = styled.View`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  background-color: ${props => props.theme.colors.background};
 `;
 
 export const CloseButton = styled.TouchableOpacity`

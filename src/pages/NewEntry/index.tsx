@@ -153,13 +153,6 @@ const NewEntry: React.FC = () => {
             <NewEntryDeleteAction handleDeleteEntry={handleDeleteEntry} />
           )}
         </FormActionContainer>
-
-        {/* <GPSButton>
-          <IconedButtonText>GPS</IconedButtonText>
-        </GPSButton>
-        <CameraButton>
-          <IconedButtonText>Camera</IconedButtonText>
-        </CameraButton> */}
       </Form>
       <ButtonsView>
         <AddButton onPress={handleSaveEntry}>

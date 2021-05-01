@@ -85,7 +85,7 @@ const EntryListItem: React.FC<ReceivedProps> = ({
 
       <DescriptionView>
         <DescriptionLabel numberOfLines={1}>
-          {entry.description || 'Desconhecido'}
+          {entry.description || entry.category?.name || 'Desconhecido'}
         </DescriptionLabel>
 
         <DescriptionDataView>

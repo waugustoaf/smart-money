@@ -12,6 +12,18 @@ export const Container = styled.View`
   border-color: ${props => props.theme.colors.lightGray};
 `;
 
+export const EmptyView = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const EmptyText = styled.Text`
+  color: ${props => props.theme.colors.red};
+  font-weight: bold;
+  font-size: 14px;
+`;
+
 export const Body = styled.View`
   flex: 1;
 `;

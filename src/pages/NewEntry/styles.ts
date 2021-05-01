@@ -52,6 +52,7 @@ export const ButtonsView = styled.View`
   padding: 20px 0;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
 `;
 
 export const DeleteButton = styled.TouchableOpacity``;
