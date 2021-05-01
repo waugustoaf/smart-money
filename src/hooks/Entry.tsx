@@ -43,7 +43,6 @@ const EntryProvider: React.FC = ({ children }) => {
 
   const save = useCallback(
     async ({ amount, isInit, id, entryAt, category, description  }: SaveEntryProps) => {
-      console.log(description);
 
       const data = {
         amount: parseFloat(amount),

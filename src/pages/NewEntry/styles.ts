@@ -28,17 +28,31 @@ export const GPSButton = styled.TouchableOpacity``;
 
 export const CameraButton = styled.TouchableOpacity``;
 
-export const AddButton = styled.TouchableOpacity``;
+export const AddButton = styled.TouchableOpacity`
+  border: 1px solid ${props => props.theme.colors.green};
+  padding: 8px 15px;
+  border-radius: 20px;
+`;
 
-export const CancelButton = styled.TouchableOpacity``;
+export const CancelButton = styled.TouchableOpacity`
+  margin-left: 15px;
+`;
 
-export const ButtonText = styled.Text``;
+export const ButtonText = styled.Text`
+  color: ${props => props.theme.colors.white};
+`;
 
-export const AddButtonText = styled.Text``;
+export const AddButtonText = styled.Text`
+  color: ${props => props.theme.colors.green};
+`;
 
 export const IconedButtonText = styled.Text``;
 
-export const ButtonsView = styled.View``;
+export const ButtonsView = styled.View`
+  padding: 20px 0;
+  flex-direction: row;
+  align-items: center;
+`;
 
 export const DeleteButton = styled.TouchableOpacity``;
 

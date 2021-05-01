@@ -9,6 +9,7 @@ import { ICategory } from '../../interfaces/ICategory';
 import { IEntry } from '../../interfaces/IEntry';
 import { NewEntryCategoryPicker } from './CategoryPicker';
 import { NewEntryDatePicker } from './DatePicker';
+import { NewEntryDeleteAction } from './DeleteAction';
 import { NewEntryInput } from './Input';
 import {
   AddButton,
@@ -148,6 +149,9 @@ const NewEntry: React.FC = () => {
             currentDate={entryAt}
             onChangeValue={setEntryAt}
           />
+          {!!entry.id && (
+            <NewEntryDeleteAction handleDeleteEntry={handleDeleteEntry} />
+          )}
         </FormActionContainer>
 
         {/* <GPSButton>
@@ -156,23 +160,16 @@ const NewEntry: React.FC = () => {
         <CameraButton>
           <IconedButtonText>Camera</IconedButtonText>
         </CameraButton> */}
-
-        <ButtonsView>
-          <AddButton onPress={handleSaveEntry}>
-            <AddButtonText>Adicionar</AddButtonText>
-          </AddButton>
-
-          {!!entry.id && (
-            <DeleteButton onPress={handleDeleteEntry}>
-              <DeleteButtonText>Excluir</DeleteButtonText>
-            </DeleteButton>
-          )}
-
-          <CancelButton onPress={() => navigation.goBack()}>
-            <ButtonText>Cancelar</ButtonText>
-          </CancelButton>
-        </ButtonsView>
       </Form>
+      <ButtonsView>
+        <AddButton onPress={handleSaveEntry}>
+          <AddButtonText>{entry.id ? 'Salvar' : 'Adicionar'}</AddButtonText>
+        </AddButton>
+
+        <CancelButton onPress={() => navigation.goBack()}>
+          <ButtonText>Cancelar</ButtonText>
+        </CancelButton>
+      </ButtonsView>
     </Container>
   );
 };
