@@ -15,57 +15,76 @@ import {
   CloseButton,
   CloseButtonText,
   Container,
-  DaysButton,
-  DaysButtonText,
+  Button,
+  ButtonText,
   FiltersView,
 } from './styles';
+import { CategoryModal } from '../../components/CategoryModal';
+import { ICategory } from '../../interfaces/ICategory';
 
 const Report: React.FC = () => {
   const [isRelativeDaysModalVisible, setIsRelativeDaysModalVisible] = useState(
     false,
   );
+  const [isCategoryModalVisible, setIsCategoryModalVisible] = useState(false);
 
   const navigation = useNavigation();
-  const { days, setDays } = useEntry();
+  const { days, setDays, category, setCategory } = useEntry();
 
   const handleGoBack = () => {
     navigation.goBack();
   };
 
-  const onConfirm = useCallback((days: number) => {
+  const onDayConfirm = useCallback((days: number) => {
     setDays(days);
     setIsRelativeDaysModalVisible(false);
+  }, []);
+
+  const onCategoryConfirm = useCallback((category: ICategory) => {
+    setCategory(category);
+    setIsCategoryModalVisible(false);
   }, []);
 
   return (
     <Container>
       <StatusBar backgroundColor="#233240" />
       <BalanceLabel />
-
       <FiltersView>
-        <DaysButton onPress={() => setIsRelativeDaysModalVisible(true)}>
-          <DaysButtonText>{formatDays(days)}</DaysButtonText>
+        <Button onPress={() => setIsRelativeDaysModalVisible(true)}>
+          <ButtonText>{formatDays(days)}</ButtonText>
           <Icon
             name="keyboard-arrow-down"
             size={20}
             color={Colors.champagneDark}
           />
-        </DaysButton>
+        </Button>
+        <Button isNotFirst onPress={() => setIsCategoryModalVisible(true)}>
+          <ButtonText>
+            {category.id ? category.name : 'Todas as categorias'}
+          </ButtonText>
+          <Icon
+            name="keyboard-arrow-down"
+            size={20}
+            color={Colors.champagneDark}
+          />
+        </Button>
       </FiltersView>
-
       <EntrySummary />
       <EntryList />
-
       <ButtonsView>
         <CloseButton onPress={handleGoBack}>
           <CloseButtonText>Fechar</CloseButtonText>
         </CloseButton>
       </ButtonsView>
-
       <RelativeDaysModal
         isRelativeDaysModalVisible={isRelativeDaysModalVisible}
         setIsRelativeDaysModalVisible={setIsRelativeDaysModalVisible}
-        onConfirm={onConfirm}
+        onConfirm={onDayConfirm}
+      />
+      <CategoryModal
+        isCategoryModalVisible={isCategoryModalVisible}
+        setIsCategoryModalVisible={setIsCategoryModalVisible}
+        onConfirm={onCategoryConfirm}
       />
     </Container>
   );

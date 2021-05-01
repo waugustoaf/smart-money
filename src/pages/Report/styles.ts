@@ -1,24 +1,31 @@
 import styled from 'styled-components/native';
 
+interface ButtonProps {
+  isNotFirst?: boolean;
+}
+
 export const Container = styled.View`
   flex: 1;
 `;
 
 export const FiltersView = styled.View`
   padding: 10px 0;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const DaysButton = styled.TouchableOpacity`
+export const Button = styled.TouchableOpacity<ButtonProps>`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 0 15px;
+  margin: 0 5px;
   padding: 5px 10px;
   border: 1px solid ${props => props.theme.colors.champagneDark};
   border-radius: 150px;
 `;
 
-export const DaysButtonText = styled.Text`
+export const ButtonText = styled.Text`
   color: ${props => props.theme.colors.champagneDark};
   font-weight: bold;
 `;

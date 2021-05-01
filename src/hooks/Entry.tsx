@@ -26,6 +26,8 @@ interface IEntryContextProps {
   remove: (id: string) => void;
   days: number;
   setDays: React.Dispatch<React.SetStateAction<number>>;
+  category: ICategory;
+  setCategory: React.Dispatch<React.SetStateAction<ICategory>>;
 }
 
 const EntryContext = createContext({} as IEntryContextProps);
@@ -34,14 +36,16 @@ const EntryProvider: React.FC = ({ children }) => {
   const [entries, setEntries] = useState([] as IEntry[]);
   const [isLoading, setIsLoading] = useState(true);
   const [days, setDays] = useState(0);
+  const [category, setCategory] = useState({} as ICategory);
 
   useEffect(() => {
     (async () => {
-      const entryArray = await getEntries(days);
+      const entryArray = await getEntries({ days, category });
+      setCategory(category);
       setEntries(entryArray);
       setIsLoading(false);
     })();
-  }, [days]);
+  }, [days, category]);
 
   const save = useCallback(
     async ({
@@ -63,7 +67,7 @@ const EntryProvider: React.FC = ({ children }) => {
 
       saveEntry(data, !!id);
 
-      const newEntries = await getEntries(days);
+      const newEntries = await getEntries({ days, category });
       setEntries(newEntries);
     },
     [],
@@ -79,7 +83,16 @@ const EntryProvider: React.FC = ({ children }) => {
 
   return (
     <EntryContext.Provider
-      value={{ entries, save, isLoading, remove, days, setDays }}
+      value={{
+        entries,
+        save,
+        isLoading,
+        remove,
+        days,
+        setDays,
+        category,
+        setCategory,
+      }}
     >
       {children}
     </EntryContext.Provider>

@@ -6,6 +6,11 @@ import { IEntry } from '../interfaces/IEntry';
 import { getRealm } from './Realm';
 import { sub } from 'date-fns';
 
+interface GetEntriesProps {
+  days: number;
+  category: ICategory;
+}
+
 export const saveEntry = async (
   { amount, id, entryAt, isInit, category, description }: IEntry,
   isEditing: boolean,
@@ -52,25 +57,31 @@ export const saveEntry = async (
   return data;
 };
 
-export const getEntries = async (days: number) => {
+export const getEntries = async ({ days, category }: GetEntriesProps) => {
   const realm = await getRealm();
+  // realm.write(() => {
+  //   realm.deleteAll();
+  // });
 
   let searchBuild = realm.objects('Entry');
 
   if (days > 0) {
     const startDate = sub(new Date(), { days });
-    searchBuild = searchBuild.filtered(`entryAt >= $0 AND entryAt < $1`, startDate, new Date());
+    searchBuild = searchBuild.filtered(
+      `entryAt >= $0 AND entryAt < $1`,
+      startDate,
+      new Date(),
+    );
+  }
+  if (days < 0) {
+    searchBuild = searchBuild.filtered('entryAt > $0', new Date());
   }
 
-  if(days < 0){
-    searchBuild = searchBuild.filtered('entryAt > $0', new Date());
-  } 
+  if (category && category.id) {
+    searchBuild = searchBuild.filtered('category.id = $0', category.id);
+  }
 
   const entries = searchBuild.sorted('entryAt', true);
-
-  // realm.write(() => {
-  //   realm.deleteAll();
-  // });
 
   let entriesArray = [] as IEntry[];
 
