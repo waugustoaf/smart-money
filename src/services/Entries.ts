@@ -77,7 +77,7 @@ export const getEntries = async ({ days, category }: GetEntriesProps) => {
     searchBuild = searchBuild.filtered('entryAt > $0', new Date());
   }
 
-  if (category && category.id) {
+  if (category && category.id && category.id != '') {
     searchBuild = searchBuild.filtered('category.id = $0', category.id);
   }
 

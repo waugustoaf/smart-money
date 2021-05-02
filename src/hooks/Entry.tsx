@@ -5,6 +5,7 @@ import React, {
   useEffect,
   useState,
 } from 'react';
+import 'react-native-get-random-values';
 import { v4 as uuid } from 'uuid';
 import { ICategory } from '../interfaces/ICategory';
 import { IEntry } from '../interfaces/IEntry';
@@ -66,6 +67,8 @@ const EntryProvider: React.FC = ({ children }) => {
       };
 
       saveEntry(data, !!id);
+
+      setCategory({} as ICategory);
 
       const newEntries = await getEntries({ days, category });
       setEntries(newEntries);

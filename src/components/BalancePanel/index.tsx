@@ -10,20 +10,31 @@ import {
   Container,
 } from './styles';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useBalance } from '../../hooks/Balance';
 
 const BalancePanel: React.FC = () => {
   const navigation = useNavigation();
 
+  const { balance } = useBalance();
+
   const save = useCallback(() => {
     navigation.navigate('NewEntry');
   }, []);
+
+  const formatMoney = (value: number): string => {
+    return `R$ ${value
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.')}`;
+  }
+
 
   return (
     <>
       <Container style={{ flex: 1 }} colors={[Colors.violet, Colors.blue]}>
         <BalancePanelLabel>
           <BalanceLabel>Saldo Atual</BalanceLabel>
-          <BalanceValue>R$2.102,45</BalanceValue>
+          <BalanceValue>{formatMoney(balance)}</BalanceValue>
         </BalancePanelLabel>
 
         <Chart />

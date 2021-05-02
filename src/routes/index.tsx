@@ -17,7 +17,7 @@ const Routes: React.FC = () => {
         headerShown: false,
         cardStyle: { backgroundColor: '#233240' },
       }}
-      initialRouteName="Report"
+      initialRouteName="Home"
     >
       <Screen name="Home" component={Home} />
       <Screen name="NewEntry" component={NewEntry} />

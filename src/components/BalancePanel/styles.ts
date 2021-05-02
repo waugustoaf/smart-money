@@ -4,7 +4,6 @@ import { Dimensions } from 'react-native';
 
 export const Container = styled(LinearGradient)`
   flex: 3;
-  padding: 10px 0;
   position: relative;
   align-items: center;
   justify-content: center;
@@ -12,6 +11,7 @@ export const Container = styled(LinearGradient)`
 
 export const BalancePanelLabel = styled.View`
   align-items: center;
+  z-index: 1;
 `;
 
 export const BalanceLabel = styled.Text`
@@ -35,7 +35,7 @@ export const AddOperationButton = styled.TouchableOpacity`
 
   position: absolute;
   right: ${Dimensions.get('window').width * 0.04}px;
-  top: ${Dimensions.get('window').height * 0.215}px;
+  top: ${Dimensions.get('window').height * 0.195}px;
   font-size: 0;
 
   z-index: 5;

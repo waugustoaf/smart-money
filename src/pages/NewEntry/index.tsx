@@ -18,8 +18,6 @@ import {
   ButtonText,
   CancelButton,
   Container,
-  DeleteButton,
-  DeleteButtonText,
   Form,
   FormActionContainer,
 } from './styles';
@@ -74,20 +72,18 @@ const NewEntry: React.FC = () => {
   const handleSaveEntry = () => {
     if (!isValid()) return;
 
-    const auxAmount = amount.replace('.', '').replace(',', '.');
-
     let finalAmount;
     if (isEntry) {
-      if (parseFloat(auxAmount) < 0) {
-        finalAmount = parseFloat(auxAmount) * -1;
+      if (parseFloat(amount) < 0) {
+        finalAmount = parseFloat(amount) * -1;
       } else {
-        finalAmount = parseFloat(auxAmount);
+        finalAmount = parseFloat(amount);
       }
     } else {
-      if (parseFloat(auxAmount) > 0) {
-        finalAmount = parseFloat(auxAmount) * -1;
+      if (parseFloat(amount) > 0) {
+        finalAmount = parseFloat(amount) * -1;
       } else {
-        finalAmount = parseFloat(auxAmount);
+        finalAmount = parseFloat(amount);
       }
     }
 
@@ -133,7 +129,7 @@ const NewEntry: React.FC = () => {
         <View>
           <NewEntryInput
             onChangeText={value => setAmount(value)}
-            value={String(formatAmount(amount) * 100)}
+            value={String(formatAmount(amount))}
             handleChangeEntry={handleChangeEntry}
             isEntry={isEntry}
           />

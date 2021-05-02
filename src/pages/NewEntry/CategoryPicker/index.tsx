@@ -1,18 +1,21 @@
 import React, { useState } from 'react';
-import {
-  Button,
-  Container,
-  ModalCloseButton,
-  ModalCloseButtonText,
-  Modal,
-  Title,
-  ModalContainer,
-} from './styles';
+import { FlatList } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useCategory } from '../../../hooks/Category';
-import { CategoryPicketItem } from './Item';
-import { FlatList } from 'react-native';
 import { ICategory } from '../../../interfaces/ICategory';
+import { CategoryPicketItem } from './Item';
+import
+  {
+    Button,
+    Container,
+
+
+    Modal, ModalCloseButton,
+    ModalCloseButtonText,
+
+
+    ModalContainer, Title
+  } from './styles';
 
 interface PickerProps {
   setCategory: React.Dispatch<React.SetStateAction<ICategory>>;
@@ -26,7 +29,9 @@ export const NewEntryCategoryPicker: React.FC<PickerProps> = ({
   isEntry,
 }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { categories, creditCategories, debitCategories } = useCategory();
+  const { creditCategories, debitCategories } = useCategory();
+
+
 
   return (
     <Container>

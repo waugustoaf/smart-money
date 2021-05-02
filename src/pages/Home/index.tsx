@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import BalancePanel from '../../components/BalancePanel';
 import EntryList from '../../components/EntryList';
@@ -10,8 +10,8 @@ import { Container } from './styles';
 const Home: React.FC = () => {
   const { isLoading } = useEntry();
 
-  if(isLoading) {
-    return <Load />
+  if (isLoading) {
+    return <Load />;
   }
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, ButtonText, Container, Input, Prefix } from './styles';
 
 interface InputProps {
@@ -14,6 +14,19 @@ export const NewEntryInput: React.FC<InputProps> = ({
   handleChangeEntry,
   isEntry,
 }) => {
+  function formatMoney(valueCurrent: number): string {
+    return valueCurrent
+      .toFixed(2)
+      .replace('.', ',')
+      .replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+  }
+
+  const [inputValue, setInputValue] = useState(formatMoney(Number(value)));
+
+  useEffect(() => {
+    onChangeText(inputValue.replace('.', '').replace(',', '.'));
+  }, [inputValue]);
+
   return (
     <Container>
       <Button>
@@ -28,8 +41,8 @@ export const NewEntryInput: React.FC<InputProps> = ({
 
       <Input
         type="money"
-        onChangeText={onChangeText}
-        value={String(value)}
+        onChangeText={setInputValue}
+        value={inputValue}
         options={{
           precision: 2,
           separator: ',',
