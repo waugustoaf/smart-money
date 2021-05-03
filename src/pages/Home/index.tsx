@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StatusBar } from 'react-native';
 import BalancePanel from '../../components/BalancePanel';
 import EntryList from '../../components/EntryList';

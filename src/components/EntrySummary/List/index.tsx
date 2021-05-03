@@ -1,6 +1,12 @@
-import React, { useState } from 'react';
-import { FlatList, Text } from 'react-native';
-import { Container } from './styles';
+import React, { useEffect, useState } from 'react';
+import { FlatList } from 'react-native';
+import { useEntry } from '../../../hooks/Entry';
+import {
+  FinishArrayProps,
+  getBalanceSumByCategory,
+} from '../../../utils/getBalanceSumByCategory';
+import { EntrySummaryListItem } from './Item';
+import { Container, ErrorMessage, ErrorView } from './styles';
 
 interface CategoriesProps {
   id: number;
@@ -9,20 +15,31 @@ interface CategoriesProps {
 }
 
 const EntrySummaryList = () => {
-  const [categories, setCategories] = useState<CategoriesProps[]>([
-    { id: 1, fieldName: 'Alimentação', price: 201 },
-    { id: 2, fieldName: 'Combustível', price: 12 },
-    { id: 3, fieldName: 'Aluguel', price: 120 },
-    { id: 4, fieldName: 'Lazer', price: 250 },
-    { id: 5, fieldName: 'Outros', price: 1200 },
-  ]);
+  const [categoriesData, setCategoriesData] = useState(
+    [] as FinishArrayProps[],
+  );
+  const { days, entries, category } = useEntry();
+
+  useEffect(() => {
+    (async () => {
+      const data = await getBalanceSumByCategory(days, category);
+      setCategoriesData(data);
+    })();
+  }, [days, entries]);
+
+  if (categoriesData.length === 0)
+    return (
+      <ErrorView>
+        <ErrorMessage>Nenhuma entrada para esses filtros</ErrorMessage>
+      </ErrorView>
+    );
 
   return (
     <Container>
       <FlatList
-        data={categories}
-        renderItem={({ item }) => <Text>- {item.fieldName}</Text>}
-        keyExtractor={item => item.id.toString()}
+        data={categoriesData}
+        renderItem={({ item }) => <EntrySummaryListItem category={item} />}
+        keyExtractor={item => item.category.id}
       />
     </Container>
   );

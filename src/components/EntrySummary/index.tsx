@@ -7,6 +7,7 @@ import EntrySummaryList from './List';
 import {
   Body,
   Container,
+  ContentView,
   Icon,
   PeriodButton,
   PeriodButtonText,
@@ -23,8 +24,10 @@ const EntrySummary = () => {
     <Container>
       <Body>
         <Title>Categorias</Title>
-        <EntrySummaryChart />
-        <EntrySummaryList />
+        <ContentView>
+          <EntrySummaryChart />
+          <EntrySummaryList />
+        </ContentView>
       </Body>
 
       <PeriodView>

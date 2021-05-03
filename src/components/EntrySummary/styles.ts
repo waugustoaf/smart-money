@@ -45,3 +45,9 @@ export const PeriodButtonText = styled.Text`
 export const Icon = styled(Icons)`
   margin-right: 2px;
 `;
+
+export const ContentView = styled.View`
+  flex: 1;
+  flex-direction: row;
+  align-items: center;
+`;
