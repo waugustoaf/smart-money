@@ -11,7 +11,7 @@ const Chart: React.FC = () => {
   useEffect(() => {
     (async () => {
       const newArrayValue = await getBalanceSumByDate(
-        days === 0 || days === -1 ? 30 : days,
+        days,
       );
       setBalanceArray(newArrayValue);
     })();

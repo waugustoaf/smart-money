@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useCategory } from '../../../hooks/Category';
 import { useEntry } from '../../../hooks/Entry';
 import {
   FinishArrayProps,
@@ -15,7 +14,7 @@ const EntrySummaryChart = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getBalanceSumByCategory(days, category);
+      const data = await getBalanceSumByCategory(days, category, true, false);
       setCategoriesData(data);
     })();
   }, [days, entries]);

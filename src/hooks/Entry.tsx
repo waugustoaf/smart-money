@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, {
   createContext,
   useCallback,
@@ -18,6 +19,10 @@ interface SaveEntryProps {
   entryAt?: Date;
   category: ICategory;
   description: string;
+  latitude?: number;
+  longitude?: number;
+  address?: string;
+  photo?: string | null;
 }
 
 interface IEntryContextProps {
@@ -56,6 +61,10 @@ const EntryProvider: React.FC = ({ children }) => {
       entryAt,
       category,
       description,
+      latitude,
+      longitude,
+      address,
+      photo
     }: SaveEntryProps) => {
       const data = {
         amount: parseFloat(amount),
@@ -64,6 +73,10 @@ const EntryProvider: React.FC = ({ children }) => {
         isInit,
         description,
         category,
+        latitude,
+        longitude,
+        address,
+        photo
       };
 
       saveEntry(data, !!id);
@@ -78,9 +91,8 @@ const EntryProvider: React.FC = ({ children }) => {
 
   const remove = useCallback((id: string) => {
     (async () => {
-      await deleteEntry(id);
-
       setEntries(value => value.filter(entry => entry.id !== id));
+      await deleteEntry(id);
     })();
   }, []);
 

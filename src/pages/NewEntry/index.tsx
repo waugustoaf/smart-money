@@ -7,6 +7,8 @@ import { useCategory } from '../../hooks/Category';
 import { useEntry } from '../../hooks/Entry';
 import { ICategory } from '../../interfaces/ICategory';
 import { IEntry } from '../../interfaces/IEntry';
+import { NewEntryAddressPicker } from './AddressPicker';
+import { NewEntryCameraPicker } from './CameraPicker/intex';
 import { NewEntryCategoryPicker } from './CategoryPicker';
 import { NewEntryDatePicker } from './DatePicker';
 import { NewEntryDeleteAction } from './DeleteAction';
@@ -48,6 +50,10 @@ const NewEntry: React.FC = () => {
   );
   const [canPass, setCanPass] = useState(false);
   const [entryAt, setEntryAt] = useState(new Date(entry.entryAt));
+  const [latitude, setLatitude] = useState(entry.latitude);
+  const [longitude, setLongitude] = useState(entry.longitude);
+  const [address, setAddress] = useState(entry.address);
+  const [photo, setPhoto] = useState<string | null>(entry.photo || null);
 
   useEffect(() => {
     if (canPass) {
@@ -95,6 +101,10 @@ const NewEntry: React.FC = () => {
         entryAt: new Date(entryAt),
         category,
         description: category.name,
+        latitude: latitude,
+        longitude: longitude,
+        address,
+        photo
       });
     } else {
       save({
@@ -103,6 +113,10 @@ const NewEntry: React.FC = () => {
         category,
         entryAt: new Date(entryAt),
         description: category.name,
+        latitude,
+        longitude,
+        address,
+        photo
       });
     }
 
@@ -144,6 +158,13 @@ const NewEntry: React.FC = () => {
           <NewEntryDatePicker
             currentDate={entryAt}
             onChangeValue={setEntryAt}
+          />
+          <NewEntryCameraPicker photo={photo} setPhoto={setPhoto} />
+          <NewEntryAddressPicker
+            setLatitude={setLatitude}
+            setLongitude={setLongitude}
+            setAddress={setAddress}
+            address={address}
           />
           {!!entry.id && (
             <NewEntryDeleteAction handleDeleteEntry={handleDeleteEntry} />

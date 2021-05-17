@@ -22,7 +22,7 @@ const EntrySummaryList = () => {
 
   useEffect(() => {
     (async () => {
-      const data = await getBalanceSumByCategory(days, category);
+      const data = await getBalanceSumByCategory(days, category, true, false);
       setCategoriesData(data);
     })();
   }, [days, entries]);

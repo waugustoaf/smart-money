@@ -98,7 +98,7 @@ const EntryListItem: React.FC<ReceivedProps> = ({
           {!!entry.address && (
             <DescriptionDataLocalView>
               <Icon name="location-pin" size={12} color="#95a5a6" />
-              <DescriptionDataLocalText>
+              <DescriptionDataLocalText numberOfLines={1}>
                 {entry?.address}
               </DescriptionDataLocalText>
             </DescriptionDataLocalView>
@@ -107,7 +107,9 @@ const EntryListItem: React.FC<ReceivedProps> = ({
       </DescriptionView>
 
       <ValueView>
-        <ValueLabel isOut={entry.amount < 0}>{formatMoney(entry.amount)}</ValueLabel>
+        <ValueLabel isOut={entry.amount < 0}>
+          {formatMoney(entry.amount)}
+        </ValueLabel>
       </ValueView>
     </Container>
   );

@@ -8,7 +8,7 @@ export interface IEntry {
   latitude?: number;
   longitude?: number;
   address?: string;
-  photo?: string;
+  photo?: string | null;
   isInit: boolean
   category?: ICategory;
 }

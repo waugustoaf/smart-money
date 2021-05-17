@@ -15,6 +15,7 @@ export const getBalanceSumByCategory = async (
   usedDays: number,
   currentCategory: ICategory,
   showOthers = true,
+  showInit = true,
 ) => {
   const realm = await getRealm();
   let entries = realm.objects('Entry');
@@ -31,6 +32,9 @@ export const getBalanceSumByCategory = async (
   }
   if (usedDays === -1) {
     entries = entries.filtered('entryAt >= $0', new Date());
+  }
+  if(!showInit) {
+    entries = entries.filtered('isInit == false');
   }
 
   let lodashEntries = _(convertEntryTS(entries))

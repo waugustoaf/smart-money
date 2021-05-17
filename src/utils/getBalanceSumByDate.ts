@@ -28,6 +28,9 @@ export const getBalanceSumByDate = async (usedDays: number) => {
       new Date(),
     );
   }
+  if (usedDays < 0) {
+    entries = entries.filtered('entryAt <= $0', new Date());
+  }
   entries = entries.sorted('entryAt');
 
   let lodashEntries = _(convertEntryTS(entries))

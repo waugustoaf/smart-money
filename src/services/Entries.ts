@@ -12,7 +12,18 @@ interface GetEntriesProps {
 }
 
 export const saveEntry = async (
-  { amount, id, entryAt, isInit, category, description }: IEntry,
+  {
+    amount,
+    id,
+    entryAt,
+    isInit,
+    category,
+    description,
+    latitude,
+    longitude,
+    address,
+    photo,
+  }: IEntry,
   isEditing: boolean,
 ) => {
   const realm = await getRealm();
@@ -24,6 +35,9 @@ export const saveEntry = async (
     isInit: isInit,
     description,
     category: category || ({} as ICategory),
+    latitude,
+    longitude,
+    address,
   };
 
   if (!category?.id) {
@@ -45,6 +59,10 @@ export const saveEntry = async (
       entries[0].isInit = isInit;
       entries[0].category = category;
       entries[0].description = description;
+      entries[0].latitude = latitude;
+      entries[0].longitude = longitude;
+      entries[0].address = address;
+      entries[0].photo = photo;
     });
 
     return;

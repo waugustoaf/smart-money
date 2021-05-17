@@ -41,6 +41,7 @@ export const DescriptionDataDateText = styled.Text`
 `;
 
 export const DescriptionDataLocalView = styled.View`
+  width: 80%;
   flex-direction: row;
   align-items: center;
 `;
