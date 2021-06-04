@@ -40,10 +40,10 @@
     "react-native-reanimated": "^2.1.0",
     "react-native-safe-area-context": "^3.2.0",
     "react-native-screens": "^3.1.1",
+    "react-native-splash-screen": "^3.2.0",
     "react-native-svg": "^12.1.1",
     "react-native-svg-charts": "^5.4.0",
     "react-native-vector-icons": "^8.1.0",
-    "react-navigation": "^4.4.4",
     "realm": "^10.4.0",
     "styled-components": "^5.2.3",
     "uuid": "^8.3.2"

@@ -1,12 +1,17 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { SafeAreaView, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import Routes from './routes';
+import React, { useEffect } from 'react';
+import { SafeAreaView, StatusBar } from 'react-native';
+import 'react-native-gesture-handler';
+import SplashScreen from 'react-native-splash-screen';
 import { AppProvider } from './hooks';
+import Routes from './routes';
 import { Theme } from './styles/theme';
 
 const App: React.FC = () => {
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
+
   return (
     <Theme>
       <NavigationContainer>

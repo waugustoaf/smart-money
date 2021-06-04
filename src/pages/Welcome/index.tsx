@@ -6,6 +6,7 @@ import { v4 as uuid } from 'uuid';
 import logoImg from '../../assets/logo-white.png';
 import { useAuth } from '../../hooks/Auth';
 import { useCategory } from '../../hooks/Category';
+import { useEntry } from '../../hooks/Entry';
 import { saveEntry } from '../../services/Entries';
 import { WelcomeBalanceInput } from './BalanceInput';
 import { WelcomeMessage } from './Message';
@@ -17,6 +18,7 @@ export const Welcome: React.FC = () => {
 
   const { initCategory } = useCategory();
   const { setUpdate } = useAuth();
+  const { updateView } = useEntry();
 
   const handleSave = async () => {
     const formattedAmount = isPositive ? Number(amount) : Number(amount) * -1;
@@ -34,6 +36,7 @@ export const Welcome: React.FC = () => {
 
     await AsyncStorage.setItem('@SmartMoney:user', uuid());
     setUpdate(previousValue => previousValue + 1);
+    updateView();
   };
 
   return (

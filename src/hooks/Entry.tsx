@@ -34,6 +34,7 @@ interface IEntryContextProps {
   setDays: React.Dispatch<React.SetStateAction<number>>;
   category: ICategory;
   setCategory: React.Dispatch<React.SetStateAction<ICategory>>;
+  updateView: () => void;
 }
 
 const EntryContext = createContext({} as IEntryContextProps);
@@ -43,6 +44,7 @@ const EntryProvider: React.FC = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [days, setDays] = useState(0);
   const [category, setCategory] = useState({} as ICategory);
+  const [updateManually, setUpdateManually] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -51,7 +53,7 @@ const EntryProvider: React.FC = ({ children }) => {
       setEntries(entryArray);
       setIsLoading(false);
     })();
-  }, [days, category]);
+  }, [days, category, updateManually]);
 
   const save = useCallback(
     async ({
@@ -64,7 +66,7 @@ const EntryProvider: React.FC = ({ children }) => {
       latitude,
       longitude,
       address,
-      photo
+      photo,
     }: SaveEntryProps) => {
       const data = {
         amount: parseFloat(amount),
@@ -76,7 +78,7 @@ const EntryProvider: React.FC = ({ children }) => {
         latitude,
         longitude,
         address,
-        photo
+        photo,
       };
 
       saveEntry(data, !!id);
@@ -96,6 +98,10 @@ const EntryProvider: React.FC = ({ children }) => {
     })();
   }, []);
 
+  const updateView = useCallback(() => {
+    setUpdateManually(previousValue => previousValue + 1);
+  }, []);
+
   return (
     <EntryContext.Provider
       value={{
@@ -107,6 +113,7 @@ const EntryProvider: React.FC = ({ children }) => {
         setDays,
         category,
         setCategory,
+        updateView,
       }}
     >
       {children}
